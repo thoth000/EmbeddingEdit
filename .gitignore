@@ -1,6 +1,11 @@
 # venv directory
-sd
+.venv
 
 # huggingface token file
 diffuser_token
 
+# pychach
+__pycache__/
+
+# output contents
+outputs/*

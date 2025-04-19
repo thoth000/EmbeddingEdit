@@ -9,7 +9,7 @@ def get_text_emb(pipe, prompt):
     tok = pipe.tokenizer(
         [prompt], padding="max_length",
         max_length=pipe.tokenizer.model_max_length,
-        return_tensors="pt"
+        return_tensors="pt",
     ).to(pipe.device)
     with torch.no_grad():
         return pipe.text_encoder(**tok).last_hidden_state
@@ -46,7 +46,7 @@ def generate_latents_from_embedding(
         1, pipe.unet.config.in_channels,
         pipe.unet.config.sample_size,
         pipe.unet.config.sample_size,
-        generator=gen, device=device, dtype=torch.float16
+        generator=gen, device=device
     ) * pipe.scheduler.init_noise_sigma
 
     emb_batch = make_cfg_batch(pipe, embedding)
