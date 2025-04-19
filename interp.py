@@ -1,6 +1,5 @@
 import os
 import argparse
-import torch
 from diffusers import StableDiffusionPipeline
 from edits import prompt_linear
 
