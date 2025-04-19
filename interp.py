@@ -16,7 +16,7 @@ def main():
     parser.add_argument("--steps", type=int, default=5, help="Number of interpolation steps")
     parser.add_argument("--out_dir", type=str, default="outputs/interpolated", help="Output directory")
     parser.add_argument("--seed", type=int, default=1234, help="Random seed for latent noise")
-    parser.add_argument("--edits_type", type=str, default="prompt_linear", choices=["prompt_linear"], help="Type of edits to apply")
+    parser.add_argument("--edit_type", type=str, default="prompt_linear", choices=["prompt_linear"], help="Type of edits to apply")
 
     args = parser.parse_args()
 
@@ -28,7 +28,7 @@ def main():
         "runwayml/stable-diffusion-v1-5",
     ).to("cuda")
     
-    if args.edits_type == "prompt_linear":
+    if args.edit_type == "prompt_linear":
         # prompt_linear モジュールを使用して補間
         prompt_linear.linear_interpolate_prompt_embeddings(
             pipe=pipe,
