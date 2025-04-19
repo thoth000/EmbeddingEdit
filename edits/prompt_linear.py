@@ -3,13 +3,13 @@ import os
 import argparse
 from diffusers import StableDiffusionPipeline
 from models import embed2img
-
+from tqdm import tqdm
 
 def linear_interpolate_prompt_embeddings(pipe, prompt_A, prompt_B, num_interps, out_dir, seed=1234):
     emb_A = embed2img.get_text_emb(pipe, prompt_A)
     emb_B = embed2img.get_text_emb(pipe, prompt_B)
 
-    for i, alpha in enumerate(torch.linspace(0, 1, steps=num_interps)):
+    for i, alpha in tqdm(enumerate(torch.linspace(0, 1, steps=num_interps)), total=num_interps):
         emb_interp = (1 - alpha) * emb_A + alpha * emb_B # linear interpolation
         latents = embed2img.generate_latents_from_embedding(pipe, emb_interp, seed=seed)
         save_path = os.path.join(out_dir, f"interp_{i:02d}_alpha_{alpha:.2f}.png")
