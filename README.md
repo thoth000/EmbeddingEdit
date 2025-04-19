@@ -1,5 +1,5 @@
 # EmbeddingEdit
-![](https://github.com/thoth000/EmbeddingEdit/blob/main/docks/image.png)
+![sample image](https://github.com/thoth000/EmbeddingEdit/blob/main/docs/image.png)
 
 ## Features
 - I implement each step of image generation, so interpolation is possible at any stage.
