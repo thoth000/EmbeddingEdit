@@ -6,3 +6,6 @@ diffuser_token
 
 # pychach
 __pycache__/
+
+# output contents
+outputs/*

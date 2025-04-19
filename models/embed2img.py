@@ -46,12 +46,12 @@ def generate_latents_from_embedding(
         1, pipe.unet.config.in_channels,
         pipe.unet.config.sample_size,
         pipe.unet.config.sample_size,
-        generator=gen, device=device, dtype=torch.float16
+        generator=gen, device=device
     ) * pipe.scheduler.init_noise_sigma
 
     emb_batch = make_cfg_batch(pipe, embedding)
 
-    for t in pipe.scheduler.timesteps:
+    for t in tqdm(pipe.scheduler.timesteps):
         latents_pair = torch.cat([latents, latents], dim=0)
         with torch.no_grad():
             noise_pred = pipe.unet(latents_pair, t, encoder_hidden_states=emb_batch).sample

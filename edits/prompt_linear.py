@@ -2,18 +2,18 @@ import torch
 import os
 import argparse
 from diffusers import StableDiffusionPipeline
-from models.embed2img import get_text_emb, generate_latents_from_embedding, decode_and_save
+from models import embed2img
 
 
 def linear_interpolate_prompt_embeddings(pipe, prompt_A, prompt_B, num_interps, out_dir, seed=1234):
-    emb_A = get_text_emb(pipe, prompt_A)
-    emb_B = get_text_emb(pipe, prompt_B)
+    emb_A = embed2img.get_text_emb(pipe, prompt_A)
+    emb_B = embed2img.get_text_emb(pipe, prompt_B)
 
     for i, alpha in enumerate(torch.linspace(0, 1, steps=num_interps)):
         emb_interp = (1 - alpha) * emb_A + alpha * emb_B # linear interpolation
-        latents = generate_latents_from_embedding(pipe, emb_interp, seed=seed)
+        latents = embed2img.generate_latents_from_embedding(pipe, emb_interp, seed=seed)
         save_path = os.path.join(out_dir, f"interp_{i:02d}_alpha_{alpha:.2f}.png")
-        decode_and_save(pipe, latents, save_path)
+        embed2img.decode_and_save(pipe, latents, save_path)
 
 
 if __name__ == "__main__":
@@ -35,7 +35,7 @@ if __name__ == "__main__":
     # パイプラインの読み込みと補間実行
     pipe = StableDiffusionPipeline.from_pretrained(
         "runwayml/stable-diffusion-v1-5",
-        torch_dtype=torch.float16
+        torch_dtype="auto"
     ).to("cuda")
 
     linear_interpolate_prompt_embeddings(
