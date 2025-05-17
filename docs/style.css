@@ -85,17 +85,17 @@ header .subtitle {
   margin-bottom: 1.5rem;
 }
 
-.prompt-highlight {
-  color: var(--clr-accent); /* Cardinal red */
+.prompt {
   font-weight: bold;
 }
 
 #imageCanvas {
   border: 1px solid var(--clr-divider);
   display: block;
-  margin: 0 auto 1.5rem auto;
-  height: 400px;
-  width: 400px;
+  margin: 0 auto 1rem;
+  width: 100%;
+  max-width: 300px;
+  aspect-ratio: 1 / 1;
   border-radius: 10px;
   background-color: var(--clr-tag-bg); /* Light gray for loading background */
 }

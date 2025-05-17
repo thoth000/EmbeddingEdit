@@ -30,6 +30,7 @@ Promise.all(images.map(img =>
 // スライダー操作で画像切り替え
 slider.addEventListener('input', () => {
   const idx = +slider.value;
+  indexLabel.textContent = `${idx}`;
   drawImage(idx);
 });
 
