@@ -1,18 +1,168 @@
+:root {
+  --clr-bg: #FFF9FB;           /* Snow-ish (white) */
+  --clr-primary: #220C10;      /* Licorice (dark text) */
+  --clr-accent: #C52233;       /* Cardinal (red for accents) */
+  --clr-highlight: #0353A4;    /* Sapphire (blue for links/buttons) */
+  --clr-divider: rgba(0, 0, 0, 0.1); /* Divider light */
+  --clr-tag-bg: rgba(0, 0, 0, 0.05); /* Light gray for tags or subtle backgrounds */
+  --clr-card-bg: #ffffff;      /* Card background - pure white or slightly off-white */
+  --clr-card-shadow: rgba(0, 0, 0, 0.1);
+  --clr-button-text: #ffffff;
+}
+
 body {
-  font-family: sans-serif;
+  font-family: 'Noto Sans JP', 'Roboto', sans-serif;
+  background-color: var(--clr-bg);
+  color: var(--clr-primary);
+  margin: 0;
+  padding: 0;
+  line-height: 1.6;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
   text-align: center;
-  padding: 2rem;
 }
-.container {
-  position: relative;
+
+.page-wrapper {
+  width: 100%;
+  max-width: 900px;
+  padding: 2rem 1rem;
+  box-sizing: border-box;
+}
+
+header {
+  margin-bottom: 2rem;
+}
+
+header h1 {
+  font-size: 2.5em;
+  color: var(--clr-primary);
+  margin-bottom: 0.5rem;
+}
+
+header .subtitle {
+  font-size: 1.1em;
+  color: #555; /* 少し濃いめのグレー */
+  margin-bottom: 1.5rem;
+}
+
+.github-link-container {
+  margin-top: 1rem;
+}
+
+.github-button {
   display: inline-block;
+  background-color: var(--clr-highlight); /* Sapphire blue */
+  color: var(--clr-button-text);
+  padding: 0.75em 1.5em;
+  border-radius: 5px;
+  text-decoration: none;
+  font-weight: bold;
+  transition: background-color 0.3s ease, transform 0.2s ease;
 }
+
+.github-button:hover,
+.github-button:focus {
+  background-color: #024283; /* Darker Sapphire */
+  transform: translateY(-2px);
+  text-decoration: none;
+}
+
+.demo-container {
+  background-color: var(--clr-card-bg);
+  padding: 2rem;
+  border-radius: 8px;
+  margin-bottom: 2rem;
+  box-shadow: 0 4px 15px var(--clr-card-shadow);
+  border: 1px solid var(--clr-divider); /* Subtle border */
+}
+
+.demo-container h2 {
+  font-size: 1.8em;
+  color: var(--clr-primary);
+  margin-top: 0;
+  margin-bottom: 1.5rem;
+}
+
+.prompt-highlight {
+  color: var(--clr-accent); /* Cardinal red */
+  font-weight: bold;
+}
+
 #imageCanvas {
-  border: 1px solid #ccc;
+  border: 1px solid var(--clr-divider);
   display: block;
-  margin-bottom: 1rem;
+  margin: 0 auto 1.5rem auto;
+  height: 400px;
+  width: 400px;
+  border-radius: 10px;
+  background-color: var(--clr-tag-bg); /* Light gray for loading background */
 }
+
+.slider-container {
+  width: 100%;
+  max-width: 400px;
+  margin: 0 auto;
+}
+
 #slider {
-  width: 600px;
+  width: 100%;
   margin-bottom: .5rem;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 8px;
+  background: #e0e0e0; /* Light gray track */
+  border-radius: 4px;
+  outline: none;
+}
+
+#slider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 18px;
+  height: 18px;
+  background: var(--clr-highlight); /* Sapphire blue */
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--clr-card-bg); /* Card background for a slight pop */
+  transition: background-color 0.2s ease;
+}
+#slider::-webkit-slider-thumb:hover {
+  background-color: #024283; /* Darker Sapphire */
+}
+
+#slider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  background: var(--clr-highlight);
+  border-radius: 50%;
+  cursor: pointer;
+  border: 2px solid var(--clr-card-bg);
+}
+#slider::-moz-range-thumb:hover {
+  background-color: #024283;
+}
+
+.slider-label {
+  font-size: 0.9em;
+  color: #555;
+}
+
+footer {
+  margin-top: 2rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--clr-divider);
+  font-size: 0.9em;
+  color: #777; /* Lighter gray for footer text */
+}
+
+footer p {
+  margin: 0;
+}
+
+/* リンクの基本スタイル */
+a {
+  color: var(--clr-highlight); /* Sapphire blue */
+  text-decoration: none;
 }

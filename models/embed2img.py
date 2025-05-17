@@ -38,7 +38,7 @@ def generate_latents_from_embedding(
     pipe,
     embedding: torch.Tensor,
     negative_prompt_embeds: torch.Tensor = None,
-    num_inference_steps: int = 30,
+    num_inference_steps: int = 50,
     guidance_scale: float = 7.5,
     seed: int = 1234,
 ):

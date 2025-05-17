@@ -6,7 +6,7 @@ from edits import prompt_linear
 
 """
 Sample usage:
-python interp.py --prompt_a "a red apple" --prompt_b "a green apple" --out_dir outputs/apple_interp
+python interp.py --prompt_a "Red sedan car, front view, driving down the center of a wide, empty highway." --prompt_b "Green sedan car, front view, driving down the center of a wide, empty highway." --steps 10
 """
 
 def main():

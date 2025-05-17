@@ -2,17 +2,49 @@
 <html lang="ja">
 <head>
   <meta charset="UTF-8">
-  <title>Image Switcher Demo</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>EmbeddingEdit: 画像補間デモ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700&family=Roboto:wght@400;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <h1>画像切り替えデモ</h1>
-  <div class="container">
-    <canvas id="imageCanvas" width="600" height="400"></canvas>
-    <!-- step=1 で整数値のみ -->
-    <input id="slider" type="range" min="0" max="9" step="1" value="0">
-    <div>Image: <span id="indexLabel">0</span> / 9</div>
+  <div class="page-wrapper">
+    <header>
+      <h1>EmbeddingEdit</h1>
+      <p class="page-main-title">テキスト埋め込みによる画像補間</p>
+      <p class="subtitle">
+        2つの異なるテキストプロンプトの埋め込みベクトル間を線形補間 (LERP) し、<br>
+        その中間ベクトルから生成される画像を表示します。
+      </p>
+      <p class="github-link-container">
+        <a href="https://github.com/thoth000/EmbeddingEdit" target="_blank" rel="noopener noreferrer" class="github-button">
+          GitHub
+        </a>
+      </p>
+    </header>
+
+    <main class="demo-container">
+      <h2>LERP</h2>
+      <!-- 変更箇所 -->
+      <p class="interpolation-display">
+        <span>"A red car"</span>
+        <span class="arrow-symbol">⇔</span>
+        <span>"A blue car"</span>
+      </p>
+      
+      <canvas id="imageCanvas"></canvas>
+      <div class="slider-container">
+        <input id="slider" type="range" min="0" max="9" step="1" value="0">
+        <div class="slider-label">補間ステップ: <span id="indexLabel">0</span> / 9</div>
+      </div>
+    </main>
+
+    <footer>
+      <p>将来的には、より自然な補間を実現する球面線形補間 (SLERP) への対応も予定しています。</p>
+    </footer>
   </div>
-  <script src="script.js"></script>
+  <script src="scripts.js"></script>
 </body>
 </html>
