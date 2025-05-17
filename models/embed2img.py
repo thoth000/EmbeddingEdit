@@ -1,5 +1,5 @@
 import torch
-from diffusers import StableDiffusionPipeline
+from diffusers import StableDiffusionPipeline, AutoencoderKL, DPMSolverMultistepScheduler
 from PIL import Image
 import numpy as np
 
@@ -16,8 +16,11 @@ def get_text_emb(pipe, prompt):
 
 
 # 無条件＋条件付きを２倍バッチ化する関数
-def make_cfg_batch(pipe, emb):
-    empty = get_text_emb(pipe, "")  # 無条件用
+def make_cfg_batch(pipe, emb, negative_emb=None):
+    if negative_emb is None:
+        empty = get_text_emb(pipe, "")  # 無条件用 (従来通り)
+    else:
+        empty = negative_emb # 指定されたネガティブ埋め込みを使用
     return torch.cat([empty, emb], dim=0)
 
 
@@ -34,7 +37,8 @@ def decode_and_save(pipe, latents, name):
 def generate_latents_from_embedding(
     pipe,
     embedding: torch.Tensor,
-    num_inference_steps: int = 50,
+    negative_prompt_embeds: torch.Tensor = None,
+    num_inference_steps: int = 30,
     guidance_scale: float = 7.5,
     seed: int = 1234,
 ):
@@ -49,7 +53,7 @@ def generate_latents_from_embedding(
         generator=gen, device=device
     ) * pipe.scheduler.init_noise_sigma
 
-    emb_batch = make_cfg_batch(pipe, embedding)
+    emb_batch = make_cfg_batch(pipe, embedding, negative_prompt_embeds)
 
     for t in pipe.scheduler.timesteps:
         latents_pair = torch.cat([latents, latents], dim=0)
@@ -63,19 +67,25 @@ def generate_latents_from_embedding(
 
 
 if __name__ == "__main__":
+    # Stable Diffusion パイプライン
+    model_id = "stabilityai/stable-diffusion-2-1-base"
+    vae_model_id = "stabilityai/sd-vae-ft-mse"
+    
+    vae = AutoencoderKL.from_pretrained(vae_model_id)
+    
     pipe = StableDiffusionPipeline.from_pretrained(
-        "runwayml/stable-diffusion-v1-5",
-        torch_dtype=torch.float16
-    ).to("cuda")
-    pipe.scheduler.set_timesteps(50)
+        model_id,
+        vae=vae,
+    )
+    
+    pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
+    
+    pipe = pipe.to("cuda")
 
     # エンベディングを生成
     prompt = "a red apple"
     emb = get_text_emb(pipe, prompt)
     # 潜在ベクトルを生成
-    latents = generate_latents_from_embedding(
-        pipe, emb,
-        num_inference_steps=50, guidance_scale=7.5, seed=1234
-    )
+    latents = generate_latents_from_embedding(pipe, emb)
     # デコード＆保存
     decode_and_save(pipe, latents, "apple.png")
