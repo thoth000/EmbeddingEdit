@@ -1,6 +1,8 @@
 # EmbeddingEdit
 ![sample image](https://github.com/thoth000/EmbeddingEdit/blob/main/docs/images/image.png)
 
+[**Website**](https://thoth000.github.io/EmbeddingEdit/)
+
 ## Features
 - I implement each step of image generation, so interpolation is possible at any stage.
   1. prompt tokenization
